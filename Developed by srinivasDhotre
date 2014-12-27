@@ -1,0 +1,224 @@
+/*
+ * @version zing textpad 0.1 
+ * @ author srinivasDhotre 
+ */
+import java.awt.*;
+import java.awt.Font;
+import java.awt.Image.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import  java.awt.font.*;
+import java.awt.font.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.PrintWriter;
+import java.util.Scanner;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.ImageIcon;
+import static javax.swing.JFileChooser.APPROVE_OPTION;
+import javax.swing.border.BevelBorder;
+
+public class Ntpd extends JFrame 
+{
+    public static void main(String[] args) {
+        
+    
+
+   
+    Font font = new Font("Lucida Sans", Font.ROMAN_BASELINE, 20);
+    
+    final JFrame frame1 = new JFrame("zing");
+     JTextArea text = new JTextArea("I am Zing textpad ! wats up?");
+    text.setFont(font);
+    text.setForeground(Color.ORANGE);
+    text.setOpaque(true);
+    ////////////////////////////////////////////////////////////////////////////////////////////////////textArea as Dark_Gray
+    text.setBackground(Color.DARK_GRAY);
+ 
+   /////////////////////////////////////////////////////////////////////////////////////////////////////
+    frame1.setDefaultCloseOperation(EXIT_ON_CLOSE);
+    frame1.setSize(450,500);
+    frame1.setVisible(true);
+    frame1.setTitle("zing textpad");
+    frame1.add(text);
+    JMenuBar menubar =new JMenuBar();// create menubar
+    frame1.setJMenuBar(menubar);
+    // add menu to the frame
+    /////////////////////////////////////////////////////////////////////////////////////////file
+    JMenu menu = new JMenu("File");  // menu1
+    menubar.add(menu); 
+    menu.setMnemonic(KeyEvent.VK_F);
+    JMenuItem menuitem1 = new JMenuItem("New");
+    menuitem1.setMnemonic('N');
+    menu.add(menuitem1);
+    
+    JMenuItem menuitem2 = new JMenuItem("Open");
+    
+    menuitem2.setMnemonic('O');
+    menu.add(menuitem2);
+    menu.addSeparator();
+    JMenuItem menuitem3 = new JMenuItem("Save");
+    menu.add(menuitem3);
+    menuitem3.setMnemonic('S');
+    JMenuItem menuitem4 = new JMenuItem("ExitZing");
+    menuitem4.setMnemonic('E');
+    menu.add(menuitem4);
+   ////////////////////////////////////////////////////////////////////////////////////////////////////extra submenu
+   
+   
+    ////////////////////////////////////////////////////////////////////////////////////////edit
+    JMenu edit = new JMenu("edit"); // menu2
+    menubar.add(edit);
+    edit.setMnemonic(KeyEvent.VK_E);
+    ///////////////////////////////////////////////////////////////////////////////
+    JMenuItem menuitem5 = new JMenuItem("copy");
+    edit.add(menuitem5);
+    //////////////////////////////
+    JMenuItem menuitem6 = new JMenuItem("paste");
+    edit.add(menuitem6);
+    ////////////////////////////////////////////
+    edit.addSeparator();
+    JMenuItem menuitem7 = new JMenuItem("fonts");
+     edit.add(menuitem7);
+     ////////////////////////////////////////////////////////////////////////////////////////view
+    JMenu view = new JMenu("view"); // menu3
+    menubar.add(view);
+    view.setMnemonic(KeyEvent.VK_V);
+    ///////////////////////////////////////////////////////////////////////////////////////help
+    JMenu help = new JMenu("help"); // menu4
+    menubar.add(help);
+    help.setMnemonic(KeyEvent.VK_H);
+    //////////////////////////////////////////////////////////inside the help 
+    JMenuItem dialogbox = new JMenuItem("about me");
+    help.add(dialogbox);
+    /////////////////////////////////////////////////////////////////////shorcut keys
+    JMenuItem shortcutkeys = new JMenuItem ("shortcut keys");
+    help.add(shortcutkeys);
+    ////////////////////////////////////////////////////////////////////////////status bar
+    
+    ///////////////////////////////////////////////////////////////////////////////////seticon
+  frame1. setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\pic\\zing.png"));
+  /////////////////////////////////////////////////////////////////////////////////////////////fontchooser
+  //JFontChooser jFontChooser = new JFontChooser(font);
+           
+    
+    
+    ////////////////////////////////////////////////////////////////////////////////////////////////actionListener
+  menuitem5.addActionListener(new ActionListener(){
+      
+      @Override
+      public void actionPerformed(ActionEvent ae)  {
+  
+            text.copy();
+
+          
+      }
+  });
+  menuitem6.addActionListener(new ActionListener(){
+      
+      @Override
+      public void actionPerformed(ActionEvent ae)  {
+  
+            text.paste();
+
+          
+      }
+  });
+  menuitem7.addActionListener(new ActionListener(){
+      
+      @Override
+      public void actionPerformed(ActionEvent ae)  {
+  
+
+  JOptionPane.showMessageDialog(frame1,"oops! currently this function not available.,Working process is going on ! \n THANK YOU");
+
+          
+      }
+  });
+  menuitem3.addActionListener(new ActionListener(){   
+        @Override   
+        public void actionPerformed(ActionEvent ae)   
+        {   
+          JFileChooser fc1 = new JFileChooser();
+          int responce = fc1.showSaveDialog(frame1);   
+          if(responce == JFileChooser.APPROVE_OPTION)   
+          {   
+            File file = fc1.getSelectedFile();   
+            PrintWriter out = null;   
+            try    
+            {   
+            out = new PrintWriter(file);   
+            String output = text.getText();   
+            System.out.println(output);   
+            out.println(output);   
+                 
+            } catch (FileNotFoundException ex)    
+            {   
+            } finally    
+            {   
+              out.flush();   
+              out.close();   
+            }   
+          }   
+        }   
+      });   
+         
+   menuitem2.addActionListener(new ActionListener(){   
+        public void actionPerformed(ActionEvent ae)   
+        {   
+	JFileChooser fc = new JFileChooser();
+          int responce = fc.showOpenDialog(frame1);   
+          if(responce == JFileChooser.APPROVE_OPTION)   
+          {   
+            File file = fc.getSelectedFile();   
+            text.setText("");   
+            try    
+            (Scanner in = new Scanner(file)) {   
+              while(in.hasNext())    
+              {   
+                String line = in.nextLine();   
+                text.append(line+"\n");   
+              }   
+            } catch (Exception ex)    
+            {   
+            }   
+          }   
+        }   
+      });   
+   
+
+    menuitem4.addActionListener(new ActionListener(){
+                        @Override
+			public void actionPerformed(ActionEvent e){
+				System.exit(0);
+			}
+		});
+    shortcutkeys.addActionListener(new ActionListener(){
+                        @Override
+			public void actionPerformed(ActionEvent e){
+				JOptionPane.showMessageDialog(frame1,"help->alt + h \n file->alt+f\n edit->alt+e\n view->alt+v ");
+            
+			}
+		});
+  menuitem1.addActionListener(new ActionListener(){
+                        @Override
+			public void actionPerformed(ActionEvent e){
+				text.setText("");
+			}
+		});
+  
+   dialogbox.addActionListener(new ActionListener(){
+                        @Override
+			public void actionPerformed(ActionEvent e){
+				JOptionPane.showMessageDialog(frame1,"welcome to ZingTextPad @copyright 2014 \n this texteditor contains all the basic function and needs\n are you thinking of any errors? please,kindly let me know bymy email\n mail me @ (srinivas31051994@gmail.com :)");
+                        }
+                        
+
+   });
+   
+  
+}
+}
